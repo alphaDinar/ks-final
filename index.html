@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/eb75260fb3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+    integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <title>KS - Home</title>
+</head>
+
+<body>
+  <section class="loader"></section>
+  <section class="page">
+    <section class="topArea">
+      <section class="topNav"></section>
+      <section class="headBox">
+        <article>
+          <div>
+            <strong class="textCon" id="headBoxTextCon"></strong>
+            <small class="textCon" id="headBoxTextCon2"></small>
+          </div>
+        </article>
+
+        <article>
+          <img src="Logos/donate.jpeg" style="z-index: 100;">
+          <a href="donate.html" id="donate">
+            Donate To Support <i class="material-symbols-outlined">paid</i>
+          </a>
+        </article>
+      </section>
+
+      <div class="prismBox">
+        <div class="prism"></div>
+        <!-- <div class="prismSmall"></div> -->
+      </div>
+    </section>
+
+    <section class="serviceBox">
+    </section>
+
+    <section class="aboutBox">
+      <section class="left">
+        <img src="Logos/ks.png" alt="">
+      </section>
+      <section class="right">
+        <p>
+          <strong class="textCon" id="aboutBoxTextCon"></strong>
+          <span class="textCon" id="aboutBoxTextCon2"></span>
+        </p>
+      </section>
+    </section>
+
+    <section class="blogBox">
+      <strong>Hello KS <sub></sub></strong>
+      <section class="blogs">
+
+      </section>
+    </section>
+
+    <script type="module">
+      import app from './js/firebase.js'
+
+      import { getDatabase, ref, set, get, child, update, query, remove, onValue } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js"
+      const db = getDatabase();
+
+      const blogs = document.querySelector('.blogs');
+      const services = document.querySelector('.serviceBox');
+
+      const textCons = document.querySelectorAll('.textCon');
+
+
+      textCons.forEach((con)=>{
+        get(child(ref(db), 'Content/' + con.id))
+        .then((res)=>{
+          con.innerHTML = res.val().text
+        })
+      });
+
+
+
+
+      var dbRef = ref(db)
+      get(child(dbRef, "Posts/"))
+        .then((objs) => {
+          var objs = Object.values(objs.val()).sort((a, b) => b.timePosted - a.timePosted)
+          objs.map((el, i) => {
+            if (i < 4) {
+              var postLiData = `
+              <a class="blog" href='viewBlog.html?${el.title}' data-aos="fade-up" style='color:black'>
+              <img src="${el.img}" alt="" />
+              <div>
+                <h3>${el.title}</h3>
+                <span>${el.description}</span>
+                <small>23rd August, 2023</small>
+                <i class="material-symbols-outlined">east</i>
+              </div>
+              </a>
+              `
+              blogs.innerHTML += postLiData
+            }
+          })
+        })
+        .catch((error) => console.log(error))
+
+        get(child(dbRef, "Services/"))
+          .then((objs) => {
+            var objs = Object.values(objs.val())
+            objs.map((el, i) => {
+              var serviceLiData = `
+                <a href='editService.html?${el.title}' class="service" data-aos="fade-up">
+                  <sub class="sPrism"></sub>
+                  <sub class="sPrismSmall">
+                    <img src=${el.img} />
+                  </sub>
+                  <p>
+                    <strong>${(el.title).toUpperCase()}</strong>
+                    <small>${el.description}</small>
+                    <i class="material-symbols-outlined">double_arrow</i>
+                  </p>
+                </a>
+                `
+              services.innerHTML += serviceLiData
+            })
+            endLoader();
+          })
+          .catch((error) => console.log(error));
+    </script>
+
+    <section class="donateBox">
+      <img src="Logos/donate.jpeg" alt="" />
+      <p data-aos="fade-up">
+        <strong>Every contribution becomes a catalyst for change.</strong>
+        <a href="donate.html" id="donate">
+          Donate To Support <i class="material-symbols-outlined">paid</i>
+        </a>
+      </p>
+    </section>
+
+    <footer>
+      <logo-tag>
+        <img src="Logos/logo2.png" alt="" />
+      </logo-tag>
+      <main class="links">
+        <section>
+          <a href=""><i class="material-symbols-outlined">directions_bus</i>
+            <span>KS Transport</span></a>
+          <a href=""><i class="material-symbols-outlined">water_bottle</i>
+            <span>KS mineral water</span>
+          </a>
+          <a href=""><i class="material-symbols-outlined">volunteer_activism</i> KS
+            Foundation</a>
+          <a href=""><i class="material-symbols-outlined">support_agent</i> KS
+            Advertising agency</a>
+        </section>
+        <hr />
+        <section>
+          <a href=""><i class="material-symbols-outlined">agriculture</i> KS Farms</a>
+          <a href=""><i class="material-symbols-outlined">local_shipping</i> KS Import
+            and export</a>
+          <a href=""><i class="material-symbols-outlined">headphones</i> KS
+            Entertainment</a>
+        </section>
+        <hr />
+        <section>
+          <a href="tel:+1 (877) 242-7372"><i class="material-symbols-outlined">smartphone</i>
+            <span>+1 (877) 242-7372</span></a>
+            </a>
+
+          <a href="mailto:info@kwamestevens.com"><i class="material-symbols-outlined">mail</i>
+            <span>info@kwamestevens.com</span></a>
+        </section>
+      </main>
+    </footer>
+  </section>
+
+  <style>
+    .menu {
+      font-weight: 700;
+    }
+  </style>
+
+  <script>
+    AOS.init();
+  </script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

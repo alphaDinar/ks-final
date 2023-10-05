@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/eb75260fb3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+    integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/blog.css" />
+  <title>HelloKS</title>
+</head>
+
+<body>
+  <section class="loader"></section>
+
+  <section class="page">
+    <section class="topArea">
+      <section class="topNav"></section>
+    </section>
+    <section class="categoryBox">
+      <section>
+        <span>Top Stories <sub style="width: 100%"></sub></span>
+        <span>News <sub></sub></span>
+        <span>Business <sub></sub></span>
+        <span>Entertainment <sub></sub></span>
+        <span>Sports <sub></sub></span>
+      </section>
+      <div style="display: flex;flex-wrap: wrap;gap: 1rem;background: transparent;">
+        <button id="username" style="padding: 10px; background: skyblue; color: white;"></button>
+        <button style="padding: 10px;" id="logout">Logout</button>
+      </div>
+    </section>
+
+    <section class="postsBox">
+      <section class="row2">
+        <a href="editBlog.html" class="post" id="addPost">+</a>
+        <style>
+          #addPost{
+            height: 360px;
+            border: 1px solid lightgray;
+            font-size: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        </style>
+      </section>
+    </section>
+  </section>
+
+  <script src="js/index.js"></script>
+  <script type="module">
+    import app from './js/firebase.js'
+    const fireAuth = getAuth(app);
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js"
+    
+    const username = document.getElementById('username')
+    onAuthStateChanged( fireAuth,user=>{
+      if(user){
+        username.innerHTML = user.email
+      }else{
+        window.location.href = 'login.html'
+      }
+    })
+
+    const logout = document.getElementById('logout')
+    logout.onclick =()=>{
+      signOut(fireAuth)
+      .then(()=>{window.location.href = 'login.html'})
+    }
+
+    import { getDatabase, ref, set, get, child, update, query, remove, onValue } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js"
+    const db = getDatabase();
+
+    
+
+    const row1 = document.querySelector('.row1')
+    const row2 = document.querySelector('.row2')
+
+    var dbRef = ref(db)
+    get(child(dbRef, "Posts/"))
+      .then((objs) => {
+        var objs = Object.values(objs.val())
+        objs.map((el, i) => {
+          var postLiData = `
+            <a href="editBlog.html?${el.title}" class="post">
+              <img src="${el.img}" alt="" />
+              <p>
+                <span>${el.title}</span>
+                <small>${el.description}</small>
+              </p>
+            </a>
+            `
+          row2.innerHTML += postLiData
+          
+        })
+        endLoader()
+      })
+      .catch((error) => {console.log(error), endLoader()})
+  </script>
+
+
+</body>
+
+</html>

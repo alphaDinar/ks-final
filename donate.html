@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/eb75260fb3.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+      integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <title>KS - Donate</title>
+  </head>
+
+  <body>
+    <section class="page">
+      <section class="topArea">
+        <div class="prismBox">
+          <div class="prism"></div>
+          <div class="prismSmall"></div>
+        </div>
+
+        <section class="topNav"></section>
+
+        <section class="paymentBox">
+          <strong>Choose your desired payment method</strong>
+          <nav>
+            <a href="https://buy.stripe.com/14k4iNf9j3Gq8VOaEE">
+              <small></small>
+              <span>Money Transfer <sub></sub></span>
+              <i class="fa-solid fa-credit-card"></i>
+            </a>
+            <a
+              href="https://commerce.coinbase.com/checkout/9e1a22b7-20d1-4b27-a5ae-ed1fc9e1b49d"
+            >
+              <small></small>
+              <span>Crypto <sub></sub></span>
+              <i class="fa-brands fa-bitcoin"></i>
+            </a>
+          </nav>
+        </section>
+      </section>
+    </section>
+
+    <style>
+      .topArea {
+        gap: 25vh 0;
+        min-height: 96vh;
+      }
+
+      .paymentBox {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        gap: 2rem;
+      }
+      .paymentBox strong {
+        font-size: 1.5rem;
+        font-weight: 400;
+        text-align: center;
+      }
+      .paymentBox nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .paymentBox nav a {
+        width: 220px;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        background: white;
+        border: 1px solid lightgray;
+        color: black;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 1rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .paymentBox nav a small {
+        width: 10px;
+        height: 10px;
+        background: skyblue;
+        background: var(--theme);
+        background: #000000;
+        border-radius: 50%;
+        position: absolute;
+        transition: 0.4s ease;
+        right: 10px;
+        top: 10px;
+        z-index: 1;
+      }
+      .paymentBox nav a:hover small {
+        scale: 60;
+      }
+      .paymentBox nav a span,
+      .paymentBox nav a span sub,
+      .paymentBox nav a i {
+        z-index: 10;
+        transition: 0.4s ease;
+      }
+      .paymentBox nav a:hover span,
+      .paymentBox nav a:hover sub,
+      .paymentBox nav a:hover i {
+        color: #26a7dd;
+        transform: translateY(-5px);
+      }
+      .paymentBox nav a:hover sub {
+        background: #26a7dd;
+      }
+      .paymentBox nav a span {
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+      .paymentBox nav a span sub {
+        width: 30px;
+        height: 3px;
+        display: block;
+        background: black;
+      }
+      .paymentBox nav a i {
+        font-size: 4rem;
+      }
+      @media all and (max-width: 850px) {
+        .topArea {
+          gap: 10vh;
+        }
+        .paymentBox nav {
+          text-align: center;
+          justify-content: space-around;
+        }
+        .paymentBox nav a span {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>

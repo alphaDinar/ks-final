@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/eb75260fb3.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+      integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="css/base.css" />
+    <!-- <link rel="stylesheet" href="css/blog.css" /> -->
+    <title>HelloKS</title>
+  </head>
+
+  <body>
+    <section class="loader"></section>
+    <section class="page">
+      <section class="topArea">
+        <section class="topNav"></section>
+      </section>
+
+      <a href="blog.html" id="backLink" class="material-symbols-outlined"
+        >chevron_left</a
+      >
+      <section class="viewPostBox">
+        <!-- <img src="" alt="">
+      <article>
+        <strong> <sub></sub> </strong>
+        <p>
+        </p>
+      </article> -->
+      </section>
+
+      <style>
+        .viewPostBox {
+          width: 90%;
+          padding: 3vh 5%;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+        }
+
+        .viewPostBox img {
+          width: 100%;
+          height: 65vh;
+          float: left;
+          border-radius: 10px;
+          object-fit: cover;
+        }
+
+        .viewPostBox strong {
+          font-size: 1.3rem;
+        }
+
+        .viewPostBox strong sub {
+          height: 5px;
+          width: 100px;
+          background: orange;
+          display: block;
+        }
+
+        @media all and (max-width: 1000px) {
+          .viewPostBox {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media all and (max-width: 500px) {
+          .viewPostBox img {
+            height: 30vh;
+          }
+        }
+      </style>
+    </section>
+
+    <script src="js/index.js"></script>
+
+    <script type="module">
+      import app from "./js/firebase.js";
+
+      import {
+        getDatabase,
+        ref,
+        set,
+        get,
+        child,
+        orderByChild,
+        equalTo,
+        update,
+        query,
+        remove,
+        onValue,
+      } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js";
+      const db = getDatabase();
+
+      let titleParams = window.location.href.split("?")[1].split("%20");
+
+      var titleParam = "";
+      titleParams.forEach((el) => {
+        titleParam += " " + el;
+      });
+      titleParam = titleParam.trim();
+
+      const viewPostBox = document.querySelector(".viewPostBox");
+
+      const dataRef = ref(db, "Posts/");
+      const queryRef = query(
+        dataRef,
+        orderByChild("title"),
+        equalTo(titleParam)
+      );
+
+      get(queryRef).then((res) => {
+        const blog = Object.values(res.val())[0];
+        viewPostBox.innerHTML = `
+        <img src="${blog.img}" alt="">
+        <article>
+          <strong>${blog.title} <sub></sub> </strong>
+          <p>${blog.description}</p>
+          <small style="color:orange">${getTimeSince(blog.timePosted)}</small>
+        </article>
+        `;
+        endLoader();
+      });
+    </script>
+  </body>
+</html>

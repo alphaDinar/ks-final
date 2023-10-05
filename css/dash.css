@@ -1,0 +1,49 @@
+.post {
+  border: 1px solid black;
+}
+
+.sidebar {
+  z-index: 1000;
+  padding: 5vh 2%;
+}
+.sidebar button{
+  background: black;
+  color: white;
+}
+
+main {
+  padding: 5vh 5%;
+
+}
+
+.sidebar.change {
+  left: -20%;
+  transition: 0.4s ease;
+}
+
+main.change {
+  width: 100%;
+  transition: 0.4s ease;
+}
+
+@media all and (max-width:1285px) {
+  .sidebar {
+    width: 300px;
+    left: -300px;
+  }
+
+  .sidebar.change {
+    left: 0;
+  }
+
+  main {
+    width: 100% !important;
+  }
+}
+
+@media all and (max-width:650px) {
+  .postBox {
+    flex-direction: column;
+    align-items: center;
+  }
+}

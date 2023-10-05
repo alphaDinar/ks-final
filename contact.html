@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/eb75260fb3.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+    integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <title>KS - Contact</title>
+</head>
+
+<body>
+  <section class="loader"></section>
+  <section class="page">
+    <section class="topArea">
+      <section class="topNav"></section>
+    </section>
+
+    <form method="post" onsubmit="event.preventDefault()">
+      <div>
+        <span>Your Name</span>
+        <input type="text" name="yourName" required>
+      </div>
+      <div>
+        <span>Email</span>
+        <input type="email" name="email" required>
+      </div>
+      <div>
+        <span>Message</span>
+        <textarea name="message" required></textarea>
+      </div>
+      <div>
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </form>
+
+    <footer>
+      <logo-tag>
+        <img src="Logos/logo2.png" alt="" />
+      </logo-tag>
+      <main class="links">
+        <section>
+          <a href=""><i class="material-symbols-outlined">directions_bus</i>
+            <span>KS Transport</span></a>
+          <a href=""><i class="material-symbols-outlined">water_bottle</i>
+            <span>KS mineral water</span>
+          </a>
+          <a href=""><i class="material-symbols-outlined">volunteer_activism</i> KS
+            Foundation</a>
+          <a href=""><i class="material-symbols-outlined">support_agent</i> KS
+            Advertising agency</a>
+        </section>
+        <hr />
+        <section>
+          <a href=""><i class="material-symbols-outlined">agriculture</i> KS Farms</a>
+          <a href=""><i class="material-symbols-outlined">local_shipping</i> KS Import
+            and export</a>
+          <a href=""><i class="material-symbols-outlined">headphones</i> KS
+            Entertainment</a>
+        </section>
+        <hr />
+        <section>
+          <a href="tel:+1 (877) 242-7372"><i class="material-symbols-outlined">smartphone</i>
+            <span>+1 (877) 242-7372</span></a>
+          <a href="mailto:info@kwamestevens.com"><i class="material-symbols-outlined">mail</i>
+            <span>info@kwamestevens.com</span></a>
+        </section>
+      </main>
+    </footer>
+  </section>
+
+
+  <style>
+    .page {
+      min-height: 80vh;
+      background-image: url(Logos/bg3.jpg);
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    form {
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid lightgray;
+      /* position: absolute; */
+      /* top: 50%; */
+      /* left: 50%; */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      background: white;
+      /* transform: translateX(-50%) translateY(-50%); */
+    }
+
+    form input {
+      width: 250px;
+      padding: 5px 15px;
+      height: 30px;
+      background: whitesmoke;
+    }
+
+    form div {
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    form textarea {
+      width: 250px;
+      height: 150px;
+      background: whitesmoke;
+      resize: none;
+      padding: 5px 15px;
+    }
+
+    form button {
+      padding: 8px 15px;
+      border-radius: 3px;
+      background: var(--theme);
+      color: black;
+    }
+
+    @media all and (max-width:350px) {
+
+      form input,
+      form textarea {
+        width: 180px;
+      }
+    }
+  </style>
+
+  <script src="js/index.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+  </script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init("xycoVLmeYUmtyk81w");
+    })();
+
+
+    const form = document.querySelector('form')
+    const yourName = document.querySelector('input[name="yourName"]')
+    const email = document.querySelector('input[name="email"]')
+    const messageIn = document.querySelector('textarea[name="message"]')
+
+    endLoader()
+    const sendMessage = () => {
+      var templateParams = {
+        name: yourName.value,
+        message: messageIn.value,
+        email : email.value
+      };
+
+      startLoader()
+      emailjs.send('service_w2owa4g', 'template_tqwliok', templateParams)
+        .then(function (response) {
+          alert('message sent')
+          form.reset()
+          endLoader()
+          console.log('SUCCESS!', response.status, response.text);
+        }, function (error) {
+          console.log('FAILED...', error);
+        });
+    }
+
+  </script>
+
+</body>
+
+</html>

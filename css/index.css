@@ -1,0 +1,182 @@
+.topArea {
+  min-height: 65vh;
+  gap: 20vh 0;
+  background-image: url(../Logos/bg2.jpg);
+  /* display: none !important; */
+}
+
+.headBox {
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+}
+
+.headBox article {
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem 0;
+  z-index: -1;
+}
+
+.headBox article img {
+  height: 300px;
+}
+
+
+.headBox article div {
+  display: flex;
+  flex-direction: column;
+}
+
+.headBox article strong {
+  font-size: 2.3rem;
+  color: white;
+}
+
+.headBox article small {
+  color: rgb(227, 227, 227);
+}
+
+.aboutBox {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background: ghostwhite;
+  padding: 5vh 5%;
+}
+
+.aboutBox .left {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.aboutBox .right {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem 0;
+}
+
+.aboutBox .right p:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutBox .right strong {
+  font-size: 1.5rem;
+}
+
+.aboutBox .left img, #aboutImage1, #aboutImage2 {
+  height: 300px;
+  object-fit: cover;
+  position: relative;
+  bottom: 25px;
+}
+
+.donateBox {
+  width: 90%;
+  padding: 5vh 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 2rem;
+  background: ghostwhite;
+}
+
+.donateBox img {
+  width: 280px;
+  object-fit: cover;
+}
+
+
+
+.donateBox p {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem 0;
+}
+
+.donateBox strong {
+  display: flex;
+  width: 400px;
+  font-size: 2rem;
+}
+
+@media all and (max-width: 1050px) {
+  .aboutBox {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .aboutBox .right p:nth-child(1) {
+    left: revert;
+  }
+}
+
+@media all and (max-width: 850px) {
+  .headBox {
+    gap: 4rem;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .headBox article {
+    max-width: 100%;
+    align-items: center;
+  }
+  .donateBox {
+    flex-direction: column;
+    gap: 2rem 0;
+  }
+
+  .donateBox strong,
+  .donateBox p {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+@media all and (max-width: 650px) {
+  .aboutBox .left {
+    flex-direction: column;
+    align-items: center;
+  }
+  .aboutBox .left img {
+    width: 80%;
+    height: auto;
+  }
+
+  .aboutBox .right {
+    text-align: center;
+  }
+
+  .headBox article strong {
+    font-size: 1.3rem;
+  }
+  .headBox article:nth-child(1){
+    background: rgba(0, 0, 0, 0.244);
+  }
+  .donateBox p strong{
+    font-size: 1.2rem;
+  }
+}
+
+@media all and (max-width:350px){
+  .headBox article img {
+    width: 80%;
+    height: auto;
+  }
+  .donateBox img{
+    width: 80%;
+  }
+}

@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..300,0..1,-50..200" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+  <section class="page flex justify-end">
+    <section class="sidebar flex flex-col items-center justify-between fixed w-1/5 min-h-screen bg-slate-200 top-0 left-0">
+      <button class="material-symbols-outlined absolute left-full" onclick="toggleSidebar()">menu</button>
+      <header class="flex items-center gap-2">
+        <span>HelloKS</span>
+        <i class="material-symbols-outlined">chat</i>
+      </header>
+      <section class="flex flex-col gap-2">
+        <a href="" class="flex items-center gap-1 text-lg"><i class="material-symbols-outlined">post_add</i> Posts</a>
+        <a href="" class="flex items-center gap-1 text-lg"><i class="material-symbols-outlined">home</i> Homepage</a>
+        <a href="" class="flex items-center gap-1 text-lg"><i class="material-symbols-outlined">post_add</i> Posts</a>
+      </section>
+      <section>
+        <i class="material-symbols-outlined">power_settings_new</i>
+      </section>
+    </section>
+    <main class="w-4/5 min-h-screen bg-slate-50 flex flex-col gap-10">
+      <header class="text-4xl flex items-center"><i class="material-symbols-outlined text-4xl">chevron_left</i> Edit Post</header>
+      <form class="flex gap-10 flex-wrap flex-col items-start" onsubmit="event.preventDefault()">
+          <input type="text" name="title" class="w-full border border-black-600 h-10 py-2 px-2" placeholder="Title" required>
+          <textarea name="description" class="w-full border border-black-600 h-56 resize-none py-2 px-2" placeholder="Description" required></textarea>
+          <label for="addImage" class="border p-2 rounded-sm bg-blue-300 cursor-pointer text-white border-black-600">
+            Add Image
+          </label>
+          <input type="file" name="image" id="addImage" accept="image/*" style="display: none;">
+          <img src="zel.jpg" alt="preview Image" class="bg-slate-50 max-h-96 border border-black-600"></img>
+
+          <nav class="flex gap-5">
+            <button id="addPost" class="bg-zinc-700 text-white p-2 rounded">Save</button>
+            <button id="remPost" class="bg-red-400 text-white p-2 rounded">Delete</button>
+          </nav>
+      </form>
+    </main>
+  </section>
+
+  <script src="js/index.js"></script>
+  <script type="module">
+    import app from './js/firebase.js'
+
+    import { getDatabase, ref, set, get, child, update, query, remove, orderByChild, equalTo, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js"
+    import { getStorage, ref as sRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-storage.js";
+
+    const db = getDatabase();
+    const storageDB = getStorage();
+
+    const form = document.querySelector('form')
+    const titleIn = document.querySelector('input[name="title"]')
+    // const categoryIn = document.querySelector('select[name="category"]')
+    const descriptionIn = document.querySelector('textarea[name="description"]')
+    const imageIn = document.querySelector('input[name="image"]')
+    const imageBox = document.querySelector('form img')
+    const addPost = document.getElementById('addPost')
+    const remPost = document.getElementById('remPost')
+
+    imageIn.onchange = () => {
+      imageBox.src = URL.createObjectURL(imageIn.files[0])
+    }
+
+    const updateItem = (blogKey) => {
+      const image = imageIn.files[0]
+      if (image) {
+        uploadBytes(sRef(storageDB, 'Posts/' + image.name), image)
+          .then((res) => {
+            getDownloadURL(res.ref)
+              .then((img) => {
+                update(ref(db, "Posts/" + blogKey), {
+                  title: titleIn.value,
+                  // category: categoryIn.value,
+                  description: descriptionIn.value,
+                  img: img,
+                  timePosted: serverTimestamp()
+                })
+                  .then((console.log('added')))
+                  .catch((error) => console.log(error))
+              })
+              .catch((error) => console.log(error))
+          })
+          .catch((error) => console.log(error))
+      } else {
+        update(ref(db, "Posts/" + blogKey), {
+          title: titleIn.value,
+          // category: categoryIn.value,
+          description: descriptionIn.value,
+          timePosted: serverTimestamp()
+        })
+          .then(window.location.href = 'dashboard.html')
+          .catch((error) => console.log(error))
+      }
+    }
+
+    const removeItem = (blogKey) => {
+      remove(ref(db, "Posts/" + blogKey))
+        .then(window.location.href = 'dashboard.html')
+        .catch((error) => console.log(error))
+    }
+
+
+    const createItem = () => {
+      if (imageIn.files[0]) {
+        const image = imageIn.files[0]
+        uploadBytes(sRef(storageDB, 'Posts/' + image.name), image)
+          .then((res) => {
+            getDownloadURL(res.ref)
+              .then((img) => {
+                set(ref(db, "Posts/" + titleIn.value), {
+                  title: titleIn.value,
+                  // category: categoryIn.value,
+                  description: descriptionIn.value,
+                  img: img,
+                  timePosted: serverTimestamp()
+                })
+                  .then(() => {
+                    form.reset()
+                    console.log(image)
+                    imageBox.src = ''
+                    endLoader()
+                    alert('Post has been added')
+                  })
+                  .catch((error) => console.log(error))
+              })
+              .catch((error) => console.log(error))
+          })
+          .catch((error) => console.log(error))
+      }
+    }
+
+    let titleParams = window.location.href.split('?')[1];
+
+    if (titleParams) {
+      var titleParam = ''
+      titleParams.split('%20').forEach((el) => {
+        titleParam += ' ' + el
+      })
+      titleParam = titleParam.trim()
+
+      remPost.style.display = 'flex'
+      const dataRef = ref(db, 'Posts/');
+      const queryRef = query(dataRef, orderByChild('title'), equalTo(titleParam));
+      await get(queryRef)
+        .then((res) => {
+          endLoader()
+          const blog = Object.values(res.val())[0]
+          const blogKey = Object.keys(res.val())[0]
+          titleIn.value = blog.title
+          descriptionIn.value = blog.description
+          imageBox.src = blog.img
+          addPost.onclick = () => {
+            startLoader()
+            updateItem(blogKey)
+          }
+          remPost.onclick = () => {
+            startLoader()
+            removeItem(blogKey)
+          }
+        })
+    } else {
+      endLoader()
+      addPost.onclick = () => {
+        startLoader()
+        createItem()
+      }
+    }
+  </script>
+    <link rel="stylesheet" href="css/dash.css">
+</body>
+</html>
+<script src="tailwind.config.js"></script>
