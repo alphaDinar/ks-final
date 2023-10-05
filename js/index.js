@@ -58,10 +58,8 @@ if(sidebar){
   </section>
   <section style="display:flex; flex-direction:column; align-items:center; gap:1rem">
     <span id='username' class="bg-cyan-400 text-white p-2 rounded-md"></span>
-    <strong class="material-symbols-outlined" id='logout'>power_settings_new</strong>
+    <strong style="cursor:pointer;" class="material-symbols-outlined" id='logout'>power_settings_new</strong>
   </section>
-
-  
   `
 }
 

@@ -130,6 +130,13 @@
           }
         })
 
+        const logout = document.getElementById('logout');
+        console.log(logout)
+        logout.onclick = () => {
+          signOut(fireAuth)
+            .then(() => { window.location.href = 'login.html' })
+        }
+
         import { getStorage, ref as sRef, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-storage.js";
         import { getDatabase, ref, set, get, child, update, query, remove, onValue } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-database.js"
         const db = getDatabase();
