@@ -63,6 +63,16 @@ if(sidebar){
   `
 }
 
+const socialBoxes = document.querySelectorAll('.socialBox');
+socialBoxes.forEach((box)=>{
+  box.innerHTML = `
+  <a target="_blank" href="https://www.tiktok.com/search?q=kwamestevens911&t=1699407219471" class="fa-brands fa-tiktok"></a>
+  <a target="_blank" href="https://www.instagram.com/kwamestevens911/" class="fa-brands fa-instagram"></a>
+  <a target="_blank" href="" class="fa-brands fa-facebook-f"></a>
+  <a target="_blank" href="" class="fa-brands fa-youtube"></a>
+  `
+})
+
 const toggleSidebar = () => {
   if(sidebar){
     sidebar.classList.toggle('change')

@@ -17,52 +17,23 @@
   <link rel="stylesheet" href="css/index.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/base.css" />
-  <title>KS - Home</title>
+  <title>KS - Blog</title>
 </head>
 
 <body>
   <section class="loader"></section>
   <section class="page">
-    <section class="topArea">
+    <section class="topArea" style="min-height: max-content; background-image: none; gap: 0;">
       <section class="topNav"></section>
-      <section class="headBox">
-        <article>
-          <div>
-            <strong class="textCon" id="headBoxTextCon"></strong>
-            <small class="textCon" id="headBoxTextCon2"></small>
-            <nav class="socialBox">
-              
-            </nav>
-          </div>
-        </article>
-
-        <article>
-          <img src="Logos/donate.jpeg" style="z-index: 100;">
-          <a href="donate.html" id="donate">
-            Donate To Support <i class="material-symbols-outlined">paid</i>
-          </a>
-        </article>
-      </section>
-
-      <div class="prismBox">
-        <div class="prism"></div>
-        <!-- <div class="prismSmall"></div> -->
-      </div>
-    </section>
-
-    <section class="serviceBox">
-    </section>
-
-    <section class="aboutBox">
-      <section class="left">
-        <img src="Logos/ks.png" alt="">
-      </section>
-      <section class="right">
-        <p>
-          <strong class="textCon" id="aboutBoxTextCon"></strong>
-          <span class="textCon" id="aboutBoxTextCon2"></span>
-        </p>
-      </section>
+      <article>
+        <nav class="socialBox">
+        </nav>
+        <style>
+          .socialBox:nth-child(1) a{
+            color: palevioletred;
+          }
+        </style>
+      </article>
     </section>
 
     <section class="blogBox">
@@ -79,20 +50,6 @@
       const db = getDatabase();
 
       const blogs = document.querySelector('.blogs');
-      const services = document.querySelector('.serviceBox');
-
-      const textCons = document.querySelectorAll('.textCon');
-
-
-      textCons.forEach((con) => {
-        get(child(ref(db), 'Content/' + con.id))
-          .then((res) => {
-            con.innerHTML = res.val().text
-          })
-      });
-
-
-
 
       var dbRef = ref(db)
       get(child(dbRef, "Posts/"))
@@ -114,42 +71,10 @@
               blogs.innerHTML += postLiData
             }
           })
-        })
-        .catch((error) => console.log(error))
-
-      get(child(dbRef, "Services/"))
-        .then((objs) => {
-          var objs = Object.values(objs.val())
-          objs.map((el, i) => {
-            var serviceLiData = `
-                <a href='editService.html?${el.title}' class="service" data-aos="fade-up">
-                  <sub class="sPrism"></sub>
-                  <sub class="sPrismSmall">
-                    <img src=${el.img} />
-                  </sub>
-                  <p>
-                    <strong>${(el.title).toUpperCase()}</strong>
-                    <small>${el.description}</small>
-                    <i class="material-symbols-outlined">double_arrow</i>
-                  </p>
-                </a>
-                `
-            services.innerHTML += serviceLiData
-          })
           endLoader();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
     </script>
-
-    <section class="donateBox">
-      <img src="Logos/donate.jpeg" alt="" />
-      <p data-aos="fade-up">
-        <strong>Every contribution becomes a catalyst for change.</strong>
-        <a href="donate.html" id="donate">
-          Donate To Support <i class="material-symbols-outlined">paid</i>
-        </a>
-      </p>
-    </section>
 
     <footer>
       <logo-tag>
