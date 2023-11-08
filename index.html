@@ -30,6 +30,9 @@
           <div>
             <strong class="textCon" id="headBoxTextCon"></strong>
             <small class="textCon" id="headBoxTextCon2"></small>
+            <nav>
+              <a href="https://www.tiktok.com/search?q=kwamestevens911&t=1699407219471" class="fa-brands fa-tiktok"></a>
+            </nav>
           </div>
         </article>
 
@@ -81,11 +84,11 @@
       const textCons = document.querySelectorAll('.textCon');
 
 
-      textCons.forEach((con)=>{
+      textCons.forEach((con) => {
         get(child(ref(db), 'Content/' + con.id))
-        .then((res)=>{
-          con.innerHTML = res.val().text
-        })
+          .then((res) => {
+            con.innerHTML = res.val().text
+          })
       });
 
 
@@ -114,11 +117,11 @@
         })
         .catch((error) => console.log(error))
 
-        get(child(dbRef, "Services/"))
-          .then((objs) => {
-            var objs = Object.values(objs.val())
-            objs.map((el, i) => {
-              var serviceLiData = `
+      get(child(dbRef, "Services/"))
+        .then((objs) => {
+          var objs = Object.values(objs.val())
+          objs.map((el, i) => {
+            var serviceLiData = `
                 <a href='editService.html?${el.title}' class="service" data-aos="fade-up">
                   <sub class="sPrism"></sub>
                   <sub class="sPrismSmall">
@@ -131,11 +134,11 @@
                   </p>
                 </a>
                 `
-              services.innerHTML += serviceLiData
-            })
-            endLoader();
+            services.innerHTML += serviceLiData
           })
-          .catch((error) => console.log(error));
+          endLoader();
+        })
+        .catch((error) => console.log(error));
     </script>
 
     <section class="donateBox">
@@ -176,14 +179,28 @@
         <section>
           <a href="tel:+1 (877) 242-7372"><i class="material-symbols-outlined">smartphone</i>
             <span>+1 (877) 242-7372</span></a>
-            </a>
+          </a>
 
           <a href="mailto:info@kwamestevens.com"><i class="material-symbols-outlined">mail</i>
             <span>info@kwamestevens.com</span></a>
         </section>
       </main>
+      <nav>
+        <a href="https://www.tiktok.com/search?q=kwamestevens911&t=1699407219471" class="fa-brands fa-tiktok"></a>
+      </nav>
     </footer>
   </section>
+
+  <style>
+    .headBox article nav {
+      margin-top: 1rem;
+    }
+
+    .headBox article nav a, footer nav a {
+      font-size: 2rem;
+      color: var(--theme);
+    }
+  </style>
 
   <style>
     .menu {
